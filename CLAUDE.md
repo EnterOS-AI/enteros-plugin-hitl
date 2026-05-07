@@ -73,7 +73,7 @@ hitl:
 ### Setup
 
 ```bash
-git clone https://github.com/Molecule-AI/molecule-ai-plugin-molecule-hitl.git
+git clone https://git.moleculesai.app/molecule-ai/molecule-ai-plugin-molecule-hitl.git
 cd molecule-ai-plugin-molecule-hitl
 
 # YAML validation
