@@ -164,5 +164,48 @@ class TestValidatePlugin(unittest.TestCase):
         self.assertIn('molecule-hitl', result.stdout)
 
 
+class TestClaudeCodeAdaptor(unittest.TestCase):
+    """Verify the claude_code runtime adapter is present and well-formed."""
+
+    ADAPTER_PATH = os.path.join(REPO_ROOT, 'adapters', 'claude_code.py')
+    SCRIPTS_PATH = os.path.join(REPO_ROOT, 'skills', 'hitl-gates', 'scripts', 'hitl_tools.py')
+    SKILL_PATH = os.path.join(REPO_ROOT, 'skills', 'hitl-gates', 'SKILL.md')
+
+    def test_adapter_file_exists(self):
+        self.assertTrue(os.path.isfile(self.ADAPTER_PATH))
+
+    def test_adapter_exports_adaptor(self):
+        with open(self.ADAPTER_PATH) as f:
+            content = f.read()
+        self.assertIn('Adaptor', content)
+
+    def test_scripts_dir_with_tools_exists(self):
+        """skills/hitl-gates/scripts/ must exist for the skill loader to
+        auto-discover @tool-decorated functions."""
+        import os as _os
+        scripts_dir = os.path.join(REPO_ROOT, 'skills', 'hitl-gates', 'scripts')
+        self.assertTrue(_os.path.isdir(scripts_dir))
+
+    def test_hitl_tools_script_imports_tools(self):
+        """hitl_tools.py re-exports the three HITL tools so the skill loader
+        registers them on the Claude Code agent's tool list."""
+        with open(self.SCRIPTS_PATH) as f:
+            content = f.read()
+        self.assertIn('pause_task', content)
+        self.assertIn('resume_task', content)
+        self.assertIn('list_paused_tasks', content)
+
+    def test_skill_md_has_runtime_field(self):
+        """SKILL.md frontmatter declares runtime:[claude_code] so the skill
+        loader does not skip it for the Claude Code runtime."""
+        import yaml
+        with open(self.SKILL_PATH) as f:
+            content = f.read()
+        parts = content.split('---', 2)
+        _, frontmatter, _ = parts
+        data = yaml.safe_load(frontmatter)
+        self.assertIn('runtime', data)
+
+
 if __name__ == '__main__':
     unittest.main(verbosity=2)

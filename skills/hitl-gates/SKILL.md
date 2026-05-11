@@ -1,6 +1,7 @@
 ---
 name: hitl-gates
 description: "Gate irreversible actions behind a human approval request. Use when an async callable (tool, method, or standalone function) performs a destructive or public action: deployment, deletion, outbound message, or issue/PR creation. Prevents unattended agents from shipping destructive work."
+runtime: [claude_code]  # loaded via scripts/hitl_tools.py re-export
 ---
 
 # HITL Gates
