@@ -62,9 +62,14 @@ hitl:
 
 ```
 skills/
-  hitl-gates/      # SKILL.md — agent-side guidance
+  hitl-gates/
+    SKILL.md       # Agent-side guidance (when/how to use HITL gates)
+    scripts/
+      hitl_tools.py  # Re-exports pause_task / resume_task / list_paused_tasks
+                     # for the skill loader's auto-discovery
 adapters/
-  langgraph.py     # Registers decorator and tools for langgraph runtime
+  claude_code.py  # Installs skill via AgentskillsAdaptor; HITL tools land on
+                   # the Claude Code agent's tool list via scripts/hitl_tools.py
 ```
 
 ## Known issues
