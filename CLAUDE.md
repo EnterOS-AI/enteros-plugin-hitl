@@ -6,7 +6,7 @@
 and RBAC bypass roles.
 
 **Version:** 1.0.0
-**Runtime:** `langgraph`, `claude_code`, `deepagents`
+**Runtime:** `claude_code`
 
 ---
 
