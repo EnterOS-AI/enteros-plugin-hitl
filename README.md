@@ -50,9 +50,7 @@ hitl:
 
 ## Runtimes
 
-- `langgraph` — primary
 - `claude_code` — supported
-- `deepagents` — supported
 
 ## Skills
 
